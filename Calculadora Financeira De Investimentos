@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <math.h>
+
+int main()
+{
+  int anos = 0;
+  int valorAdicionado = 0;
+  float jurosAoMes = 0;
+printf("********** Calculadora de Investimentos **********\n\n");
+
+do{
+printf("Por quantos anos voce deseja investir?\n");
+scanf("%d", &anos);
+if (anos < 1 )
+    printf("Você deve adicionar um valor maior a 0\n");
+} while (anos < 1);
+
+do{
+printf("E quanto voce deseja adicionar por mes?\n");
+scanf("%d", &valorAdicionado);
+if (valorAdicionado < 1 )
+    printf("Você deve adicionar um valor maior do que 0\n");
+} while (valorAdicionado < 1);
+
+do{
+printf("Qual será a porcentagem dos juros ao mes?\n");
+scanf("%f", &jurosAoMes);
+if (jurosAoMes < 0.0)
+    printf("Os juros devem ser maiores do que 0.0\n");
+} while (jurosAoMes < 0.0);
+
+int meses = anos * 12; //36 se for 3 anos
+int totalDiasUteis = meses * 22; // 36 * 22 = 792
+float taxaDiaria = pow((1 + jurosAoMes / 100), (1.0 / 22)) - 1 ;
+
+float montante = valorAdicionado;
+
+while(totalDiasUteis >= 0){ 
+    montante *=(1 + taxaDiaria); // montante = montante * (1 + taxaDiaria)
+    
+    if (totalDiasUteis %30 == 0){
+        montante += valorAdicionado;
+    }
+    totalDiasUteis--;
+}
+ printf("O valor final após %d anos é: %.2f\n", anos, montante); 
+return 0;
+}
